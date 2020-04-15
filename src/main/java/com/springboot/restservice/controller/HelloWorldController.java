@@ -2,10 +2,7 @@ package com.springboot.restservice.controller;
 
 import com.springboot.restservice.model.UserDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -16,9 +13,10 @@ public class HelloWorldController {
         return ResponseEntity.ok("Hello "+name);
     }
 
-    @GetMapping("/")
-    public UserDetail getUserDetails(){
-        return null;
+    @GetMapping("/user/{firstname}/{lastname}")
+    public UserDetail getUserDetails(@PathVariable("firstname")String firstname, @PathVariable("lastname")String lastname,
+    @RequestParam("city")String city){
+        return new UserDetail(firstname,lastname,city);
     }
 
 }

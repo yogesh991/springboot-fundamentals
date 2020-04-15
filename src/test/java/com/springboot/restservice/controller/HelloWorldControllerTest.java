@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.io.UnsupportedEncodingException;
+
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,4 +47,28 @@ public class HelloWorldControllerTest {
                 .andReturn();
 
     }
+
+    @Test
+    public void testUserBean_basic() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/api/user/Yogesh/Deshmukh").param("city","Bangalore")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andReturn();
+
+        assertEquals("{\"firstName\":\"Yogesh\",\"lastName\":\"Deshmukh\",\"city\":\"Bangalore\"}",result.getResponse().getContentAsString());
+    }
+
+    @Test
+    @ExceptionHandler(Exception.class)
+    public void testUserBean_Exception() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/api/user//").param("city","Bangalore")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(request)
+                .andExpect(status().is4xxClientError())
+                .andReturn();
+    }
+
 }
