@@ -1,13 +1,20 @@
 package com.springboot.restservice.controller;
 
 import com.springboot.restservice.entity.User;
+import com.springboot.restservice.exceptions.UserExistsException;
+import com.springboot.restservice.exceptions.UserNotFoundException;
 import com.springboot.restservice.service.UserServiceImpl;
-import com.springboot.restservice.utils.UserNotPresentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+
+/*
+@Author : Yogesh Deshmukh
+*/
 
 @RestController
 @RequestMapping("/user")
@@ -24,27 +31,34 @@ public class UserController {
 
     @PostMapping("/")
     public User createUser(@RequestBody User user){
-        return userService.createUser(user);
+        try {
+            return userService.createUser(user);
+        } catch (UserExistsException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable("id") Long id){
-        Optional<User> user = userService.getUserById(id);
-            if(user.isPresent())
-                return user.get();
-            else
-                throw new UserNotPresentException("User doesn't exist :"+id);
+    public Optional<User>  getUserById(@PathVariable("id") Long id){
+        try {
+            return userService.getUserById(id);
+        } catch (UserNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
     public User updateUserById(@PathVariable("id")Long id, @RequestBody User user){
-        return userService.updateUserById(id,user);
+        try {
+            return userService.updateUserById(id,user);
+        } catch (UserNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
-    public String deleteUserById(@PathVariable("id") Long id){
+    public void deleteUserById(@PathVariable("id") Long id){
         userService.deleteUserById(id);
-        return "Successfully Deleted !!";
     }
 
     @GetMapping("/by-username/{username}")

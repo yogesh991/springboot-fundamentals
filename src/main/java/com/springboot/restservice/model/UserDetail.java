@@ -1,7 +1,9 @@
 package com.springboot.restservice.model;
 
 import org.springframework.stereotype.Component;
-
+/*
+@Author : Yogesh Deshmukh
+*/
 @Component
 public class UserDetail {
 

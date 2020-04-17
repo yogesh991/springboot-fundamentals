@@ -2,6 +2,10 @@ package com.springboot.restservice.entity;
 
 import javax.persistence.*;
 
+/*
+@Author : Yogesh Deshmukh
+*/
+
 @Entity(name="user")
 //@Table(name="user", schema = "FIB_OWNER") When table name is different than entity name, thta time will use @Table
 public class User {
