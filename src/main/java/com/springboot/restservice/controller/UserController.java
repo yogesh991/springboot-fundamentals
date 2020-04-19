@@ -50,7 +50,7 @@ public class UserController {
              header.setLocation(builder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
              return new ResponseEntity<Void>(header,HttpStatus.CREATED);
         } catch (UserExistsException e) {
-            log.
+            log.info("UserAlreadyExist Exception for ID : "+user.getId());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
