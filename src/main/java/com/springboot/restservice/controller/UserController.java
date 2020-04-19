@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /*
 @Author : Yogesh Deshmukh
@@ -28,23 +29,28 @@ import java.util.Optional;
 @RequestMapping("/user")
 public class UserController {
 
+    private static final Logger log = Logger.getLogger(UserController.class.getName());
+
     @Autowired
     private UserServiceImpl userService;
 
 
     @GetMapping("/all")
     public List<User> getAllUsers(){
+        log.info("Inside Get All users Controller");
         return userService.getAllUsers();
     }
 
     @PostMapping("/")
     public ResponseEntity<Void> createUser(@Valid @RequestBody User user, UriComponentsBuilder builder){
+        log.info("Inside Create User Controller method");
         try {
              userService.createUser(user);
              HttpHeaders header = new HttpHeaders();
              header.setLocation(builder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
              return new ResponseEntity<Void>(header,HttpStatus.CREATED);
         } catch (UserExistsException e) {
+            log.
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
