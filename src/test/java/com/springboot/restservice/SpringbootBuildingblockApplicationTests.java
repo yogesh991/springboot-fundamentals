@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 /*
 @Author : Yogesh Deshmukh
 */
+/*
 @SpringBootTest
 class SpringbootBuildingblockApplicationTests {
 
@@ -14,3 +15,4 @@ class SpringbootBuildingblockApplicationTests {
 	}
 
 }
+*/

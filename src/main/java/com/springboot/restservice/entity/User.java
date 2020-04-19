@@ -1,6 +1,9 @@
 package com.springboot.restservice.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /*
 @Author : Yogesh Deshmukh
@@ -14,16 +17,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
+    @NotEmpty(message= "UserName is mandatory field, Please provide the username value ")
     @Column(name = "USER_NAME", length = 20, nullable = false, unique = true)
     private String username;
 
+    @Size(min=2,message= "FirstName should have atleast 2 characters")
     @Column(name = "FIRST_NAME", length = 20, nullable = false)
     private String firstname;
 
     @Column(name = "LAST_NAME", length = 20, nullable = false)
     private String lastname;
 
-    @Column(name = "EMAIL", length = 20, nullable = false)
+    @Email(message = "PLease provide valid email ID !")
+    @Column(name = "EMAIL", length = 50, nullable = false)
     private String email;
 
     @Column(name = "ROLE", length = 20, nullable = false)
