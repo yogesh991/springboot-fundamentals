@@ -4,18 +4,19 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 /*
 @Author : Yogesh Deshmukh
 */
 
-@Entity(name="user")
-//@Table(name="user", schema = "FIB_OWNER") When table name is different than entity name, thta time will use @Table
+@Entity
+@Table(name="user")//@Table(name="user", schema = "FIB_OWNER") When table name is different than entity name, thta time will use @Table
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    @GeneratedValue
+    private Long id;
 
     @NotEmpty(message= "UserName is mandatory field, Please provide the username value ")
     @Column(name = "USER_NAME", length = 20, nullable = false, unique = true)
@@ -38,7 +39,20 @@ public class User {
     @Column(name = "SSN", length = 20, nullable = false, unique = true)
     private String ssn;
 
-//No - args constructor
+    //For One User we can have Multiple Orders -> OneToMany RelationShip
+    //When you dont want to create the foreign keys in both the tables, we can go ahead with the mappedBy keyword
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    //No - args constructor
     public User() {
     }
     //Args constructor

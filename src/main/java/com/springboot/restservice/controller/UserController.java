@@ -85,28 +85,4 @@ public class UserController {
             throw new UserNameNotFoundException("UserName doesn't exist in DB, username : "+username);
         return user;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
