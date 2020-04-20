@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-2022-JP" ?>
+<DrivingLicence status="suspended">
+    <Number>123456</Number>
+    <FirstName>Yogesh</FirstName>
+    <LastName>Deshmukh</LastName>
+    <VehicleType>Four Wheeler</VehicleType>
+    <DateOfIssue>24/12/2019</DateOfIssue>
+    <ExpiryDate>24/12/2039</ExpiryDate>
+    <Address>
+        <street>2nd Cross</street>
+        <city>Bangalore</city>
+        <country>India</country>
+        <Pincode>560000</Pincode>
+    </Address>
+</DrivingLicence>
