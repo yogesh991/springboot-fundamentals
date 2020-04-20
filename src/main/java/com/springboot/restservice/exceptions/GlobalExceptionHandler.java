@@ -56,4 +56,23 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<Object>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public final ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex,
+                                                                        WebRequest request){
+        ErrorResponse response = new ErrorResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<Object>(response,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public final ResponseEntity<Object> handleOrderNotFoundException(OrderNotFoundException ex, WebRequest request){
+        ErrorResponse response = new ErrorResponse(new Date(),ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DataMismatchException.class)
+    public final ResponseEntity<Object> handleDataMismatchException(DataMismatchException ex, WebRequest request){
+        ErrorResponse response = new ErrorResponse(new Date(),ex.getMessage(),request.getDescription(false));
+        return new ResponseEntity<Object>(response,HttpStatus.BAD_REQUEST);
+    }
+
 }
